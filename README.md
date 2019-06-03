@@ -10,7 +10,7 @@ A set of scripts for provisioning and running Kubernetes on a Raspberry Pi clust
 ### Provision SD card.
 
 1. Download the Raspbian Lite image from the [Raspberry Pi website](https://www.raspberrypi.org/downloads/raspbian/).
-2. Insert SD card and run `lsblk` to get block device name. Eg. /dev/sda.
+2. Insert SD card and run `lsblk` to get block device name. Eg. `/dev/sda`.
 3. Run [./flash.sh](scripts/flash.sh) script and provide the relevant paths and config.
 
 ### Master Node
@@ -18,7 +18,7 @@ A set of scripts for provisioning and running Kubernetes on a Raspberry Pi clust
 1. Boot Pi from the flashed SD card.
 2. SSH onto the Pi: `ssh pi@[IP address]`.
 3. `cd` into `$HOME/bin`.
-4. Provision node using: `./bootstrap.sh`. **NOTE:** This script will reboot the Pi.
+4. Provision node using: `./bootstrap.sh` - **Note:** This script will reboot the Pi.
 5. Install required packages using: `./packages.sh`.
 6. Initialise master node using: `./master.sh`.
 
