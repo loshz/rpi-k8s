@@ -2,11 +2,12 @@
 
 set -o errexit
 
-# Pre-pull required images
-sudo kubeadm config images pull -v3
+read -p "Token: " TOKEN
+read -p "Token CA Cert Hash: " HASH
+read -p "Master node IP address: " MASTER_ADDR
 
-# Init master
-sudo kubeadm init --token-ttl=0 --pod-network-cidr=10.244.0.0/16
+kubeadm join ${MASTER_ADDR}:6443 --token ${TOKEN} \
+    --discovery-token-ca-cert-hash ${HASH}
 
 # Copy admin conf
 mkdir -p $HOME/.kube
