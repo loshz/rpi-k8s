@@ -33,17 +33,15 @@ Once all scripts have ran successfully, validate the master node is showing a "R
 5. Install required packages using: `./packages.sh`.
 6. Log out.
 
-After provisioning the new node, you will need to generate a new join token for [kubeadm](https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-token/).
+After provisioning the new node, you will need to generate a new [kubeadm join token](https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-token/):
 
 1. SSH onto the master node: `ssh pi@[IP address]`.
-2. Generate a new token: `kubeadm token generate`.
-3. Initialise the new token: `kubeadm token create [TOKEN]`.
-4. Log out.
+2. Create a new token: `kubeadm token create --print-join-command`.
+3. Log out.
 
 Once you have the new token and hash:
 
 1. SSH onto the new worker node.
-2. `cd` into `$HOME/bin`.
-3. Initialise worker node using: `./worker.sh`.
+2. Run the `kubeadm join` command generated on the master node.
 
 Once the worker node has successfully joined the cluster, validate the worker node is showing a "Ready" status: `kubectl get nodes`.
