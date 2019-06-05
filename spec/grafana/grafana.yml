@@ -7,20 +7,18 @@ metadata:
     app: grafana
 spec:
   ports:
-  - name: http
-    port: 80
+  - port: 80
     targetPort: 3000
   selector:
     app: grafana
 ---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: grafana
   labels:
     app: grafana
 spec:
-  serviceName: grafana
   replicas: 1
   selector:
     matchLabels:
@@ -43,11 +41,11 @@ spec:
           mountPath: /var/lib/grafana
       containers:
       - name: grafana
-        image: grafana/grafana:5.2.4
-        imagePullPolicy: IfNotPresent
+        image: grafana/grafana-arm32v7-linux:6.2.1
+        imagePullPolicy: Always
         resources:
           requests:
-            memory: 500M
+            memory: 100M
         ports:
         - containerPort: 3000
           name: http
@@ -55,6 +53,9 @@ spec:
           httpGet:
             path: /api/health
             port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
         readinessProbe:
           failureThreshold: 10
           httpGet:
@@ -62,31 +63,23 @@ spec:
             port: 3000
           initialDelaySeconds: 30
           periodSeconds: 10
-          timeoutSeconds: 30
+          timeoutSeconds: 3
         volumeMounts:
         - name: data
           mountPath: /var/lib/grafana
         - name: config
           mountPath: /etc/grafana
       volumes:
-      - configMap:
+      - name: config
+        configMap:
           items:
           - key: grafana.ini
             path: grafana.ini
           - key: datasources.yaml
             path: provisioning/datasources/datasources.yaml            
           name: grafana
-        name: config
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      storageClassName: default
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 5Gi
+      - name: data
+        emptyDir: {}
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -98,54 +91,25 @@ data:
   grafana.ini: |-
     instance_name = grafana
 
-    [server]
-    domain = metrics.platform.avct.io
-    root_url = https://metrics.platform.avct.io
-
-    [security]
-    admin_user = admin
-    admin_password = [PASSWORD]
-
-    [users]
-    auto_assign_org = true
-    auto_assign_org_id = 1
-    auto_assign_org_role = Viewer
-
     [auth]
-    disable_login_form = false
+    disable_login_form = true
 
     [auth.anonymous]
-    enabled = false
+    enabled = true
+    org_role = Admin
 
     [auth.basic]
     enabled = false
 
-    [auth.google]
-    enabled = true
-    client_id = [CLIENT ID]
-    client_secret = [CLIENT SECRET]
-    scopes = https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
-    auth_url = https://accounts.google.com/o/oauth2/auth
-    token_url = https://accounts.google.com/o/oauth2/token
-    allowed_domains = avocet.io
-    allow_sign_up = true
+    [analytics]
+    reporting_enabled = false
 
   datasources.yaml: |-
     apiVersion: 1
     datasources:
-    - name: eu-west-1-production-utility.platform.avct.io
-      type: influxdb
+    - name: rpi-k8s
+      type: prometheus
+      url: http://prometheus
       access: proxy
-      orgId: 1
-      url: http://influxdb.eu-west-1-production-utility.platform.avct.io:8086/
-      user: grafana
-      password: [PASSWORD]
-      database: metrics
-      isDefault: false
-      basicAuth: true
-      basicAuthUser: grafana
-      basicAuthPassword: [PASSWORD]
-      jsonData:
-        timeInterval: "10s"
-      version: 1
-      editable: false
+      isDefault: true
+      editable: true
