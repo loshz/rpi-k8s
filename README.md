@@ -4,9 +4,6 @@ A set of scripts for provisioning and running Kubernetes on a Raspberry Pi clust
 
 > **WARNING:** As this cluster is intended to run locally, certain security aspects have been ignored. This setup is NOT intended to be ran in a production environment!
 
-- [scripts](scripts): scripts for provisioning nodes.
-- [spec](spec): all Kubernetes related yaml.
-
 ## Installation
 
 ### Provision SD card.
