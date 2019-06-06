@@ -30,19 +30,12 @@ spec:
     spec:
       terminationGracePeriodSeconds: 30
       initContainers:
-      - name: grafana-volume-ownership
-        image: busybox
-        # This is necessary to give the grafana user permissions to store
-        # data in the mounted volume which is originally owned by root.
-        # 472 is grafana user (https://github.com/grafana/grafana-docker/blob/master/Dockerfile)
-        command: ["sh", "-c", "chown -R 472:472 /var/lib/grafana"]
-        volumeMounts:
-        - name: data
-          mountPath: /var/lib/grafana
       containers:
       - name: grafana
         image: grafana/grafana-arm32v7-linux:6.2.1
         imagePullPolicy: Always
+        securityContext:
+          runAsUser: 472
         resources:
           requests:
             memory: 100M
@@ -77,6 +70,8 @@ spec:
             path: grafana.ini
           - key: datasources.yaml
             path: provisioning/datasources/datasources.yaml            
+          - key: dashboards.yaml
+            path: provisioning/dashboards/dashboards.yaml
           name: grafana
       - name: data
         emptyDir: {}
@@ -103,6 +98,7 @@ data:
 
     [analytics]
     reporting_enabled = false
+    check_for_updates = false
 
   datasources.yaml: |-
     apiVersion: 1
@@ -113,3 +109,13 @@ data:
       access: proxy
       isDefault: true
       editable: true
+
+  dashboards.yaml: |-
+    apiVersion: 1
+    providers:
+    - name: 'default'
+      type: file
+      disableDeletion: false
+      editable: true
+      options:
+        path: /var/lib/grafana/dashboards

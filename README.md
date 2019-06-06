@@ -130,3 +130,9 @@ kubectl port-forward granana-xxxx-xxx 3000
 By default, there is a pre-configured datasource for Prometheus and a Cluster Overview dashboard that displays useful metrics.
 
 More specific information can be found in the [official documentation](https://grafana.com).
+
+### Additional Helpers
+
+Alongside the provided yaml files, a few other tools that are incredibly useful to run in a Kubernetes cluster are:
+
+- [Linkerd](https://linkerd.io): a service mesh, designed to give platform-wide observability, reliability, and security.
