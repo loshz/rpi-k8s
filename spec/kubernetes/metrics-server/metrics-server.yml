@@ -82,8 +82,11 @@ spec:
         emptyDir: {}
       containers:
       - name: metrics-server
-        image: gcr.io/google_containers/metrics-server-arm:v0.3.3
+        image: k8s.gcr.io/metrics-server-arm:v0.3.2
         imagePullPolicy: Always
+        args:
+        - --kubelet-insecure-tls=true
+        - --kubelet-preferred-address-types=InternalIP
         volumeMounts:
         - name: tmp-dir
           mountPath: /tmp

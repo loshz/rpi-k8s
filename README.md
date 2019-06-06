@@ -77,6 +77,15 @@ kubectl apply -f spec/kubernetes/kube-state-metrics/kube-state-metrics.yml
 
 More specific information can be found in the [official documentation](https://github.com/kubernetes/kube-state-metrics).
 
+### Metrics Server
+
+Deploy the metrics server using:
+```
+kubectl apply -f spec/kubernetes/metrics-server/metrics-server.yml
+```
+
+More specific information can be found in the [official documentation](https://github.com/kubernetes-incubator/matrics-server).
+
 ### Prometheus
 
 > **Note:** For simplicity, the included Prometheus yaml uses a Deployment instead of a StatefulSet. Therefore, any persisting data or changes made to the config via the UI, will be deleted if the pod is to restart.
@@ -131,7 +140,7 @@ By default, there is a pre-configured datasource for Prometheus. There are also 
 
 More specific information can be found in the [official documentation](https://grafana.com).
 
-### Additional Helpers
+### Optional
 
 Alongside the provided yaml files, a few other tools that are incredibly useful to run in a Kubernetes cluster are:
 
