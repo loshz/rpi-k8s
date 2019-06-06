@@ -67,3 +67,12 @@ kubectl proxy
 ```
 
 More specific information can be found in the [official documentation](https://github.com/kubernetes/dashboard).
+
+### kube-state-metrics
+
+Deploy the metrics generator using:
+```
+kubectl apply -f spec/kubernetes/kube-state-metrics/kube-state-metrics.yml
+```
+
+More specific information can be found in the [official documentation](https://github.com/kubernetes/kube-state-metrics).

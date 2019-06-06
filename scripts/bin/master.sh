@@ -16,4 +16,3 @@ kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl
 
 # Install Flannel CNI
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-sudo sysctl net.bridge.bridge-nf-call-iptables=1
