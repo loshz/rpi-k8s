@@ -106,12 +106,12 @@ kubectl port-forward prometheus-xxxx-xxx 9090
 ```
 
 By default, several scrape-configs have been included for the followings jobs:
-- kubernetes-apiservers
-- kubernetes-nodes
-- kubernetes-cadvisor
-- kubernetes-service-endpoints
-- kubernetes-services
-- kubernetes-pods
+- `kubernetes-apiservers`
+- `kubernetes-nodes`
+- `kubernetes-cadvisor`
+- `kubernetes-service-endpoints`
+- `kubernetes-services`
+- `kubernetes-pods`
 
 You should be able to query metrics after 30s.
 
