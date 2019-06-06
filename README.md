@@ -127,7 +127,7 @@ Once running, port-forward the pod and visit the [dashboard](http://localhost:30
 kubectl port-forward granana-xxxx-xxx 3000
 ```
 
-By default, there is a pre-configured datasource for Prometheus and a Cluster Overview dashboard that displays useful metrics.
+By default, there is a pre-configured datasource for Prometheus. There are also several dashboards in `spec/grafana/dashboards/` that can be manually imported.
 
 More specific information can be found in the [official documentation](https://grafana.com).
 

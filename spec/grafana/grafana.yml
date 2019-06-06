@@ -70,8 +70,6 @@ spec:
             path: grafana.ini
           - key: datasources.yaml
             path: provisioning/datasources/datasources.yaml            
-          - key: dashboards.yaml
-            path: provisioning/dashboards/dashboards.yaml
           name: grafana
       - name: data
         emptyDir: {}
@@ -109,13 +107,3 @@ data:
       access: proxy
       isDefault: true
       editable: true
-
-  dashboards.yaml: |-
-    apiVersion: 1
-    providers:
-    - name: 'default'
-      type: file
-      disableDeletion: false
-      editable: true
-      options:
-        path: /var/lib/grafana/dashboards
