@@ -76,3 +76,34 @@ kubectl apply -f spec/kubernetes/kube-state-metrics/kube-state-metrics.yml
 ```
 
 More specific information can be found in the [official documentation](https://github.com/kubernetes/kube-state-metrics).
+
+### Prometheus
+
+**Note:** For simplicity, the included Prometheus yaml uses a Deployment instead of a StatefulSet. Therefore, any persisting data or changes made to the config via the UI, will be deleted if the pod is to restart.
+
+Deploy Prometheus:
+```
+kubectl apply -f spec/prometheus/prometheus.yml
+```
+
+Check that the dashboard pod is running:
+```
+kubectl get pods | grep "prometheus"
+```
+
+Once running, port-forward the pod and visit the [dashboard](http://localhost:9090):
+```
+kubectl port-forward prometheus-xxxx-xxx 9090
+```
+
+By default, several scrape-configs have been included for the followings jobs:
+- kubernetes-apiservers
+- kubernetes-nodes
+- kubernetes-cadvisor
+- kubernetes-service-endpoints
+- kubernetes-services
+- kubernetes-pods
+
+You should be able to query metrics after 30s.
+
+More specific information can be found in the [official documentation](https://prometheus.io/).
