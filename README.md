@@ -84,7 +84,7 @@ Deploy the metrics server using:
 kubectl apply -f spec/kubernetes/metrics-server/metrics-server.yml
 ```
 
-More specific information can be found in the [official documentation](https://github.com/kubernetes-incubator/matrics-server).
+More specific information can be found in the [official documentation](https://github.com/kubernetes-incubator/metrics-server).
 
 ### Prometheus
 
